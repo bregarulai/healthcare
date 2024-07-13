@@ -266,6 +266,13 @@ export const RegisterForm = ({ user }: { user: User }) => {
             </SelectItem>
           ))}
         </CustomFormField>
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="identificationNumber"
+          label="Identification number"
+          placeholder="8486642458"
+        />
         {/* <div className="flex flex-col gap-6 xl:flex-row"></div>
         <div className="flex flex-col gap-6 xl:flex-row"></div>
         <div className="flex flex-col gap-6 xl:flex-row"></div>
