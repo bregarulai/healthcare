@@ -128,11 +128,10 @@ export const RegisterForm = ({ user }: { user: User }) => {
                 >
                   {GenderOptions.map((option) => (
                     <div key={option} className="radio-group">
-                      <RadioGroupItem value={option} id={option}>
-                        <Label htmlFor={option} className="cursor-pointer">
-                          {option}
-                        </Label>
-                      </RadioGroupItem>
+                      <RadioGroupItem value={option} id={option} />
+                      <Label htmlFor={option} className="cursor-pointer">
+                        {option}
+                      </Label>
                     </div>
                   ))}
                 </RadioGroup>
