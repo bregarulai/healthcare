@@ -37,11 +37,11 @@ export const PatientForm = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit({
+  const onSubmit = async ({
     name,
     email,
     phone,
-  }: z.infer<typeof UserFormValidation>) {
+  }: z.infer<typeof UserFormValidation>) => {
     setIsLoading(true);
     try {
       const userData = {
@@ -51,12 +51,16 @@ export const PatientForm = () => {
       };
 
       const user = await createUser(userData);
-      if (user) router.push(`/patients/${user.$id}/register`);
+      console.log("User: ", user);
+      if (user) {
+        console.log("if statement.  Should redirect");
+        router.push(`/patients/${user.$id}/register`);
+      }
     } catch (error) {
       console.log(error);
     }
     setIsLoading(false);
-  }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
