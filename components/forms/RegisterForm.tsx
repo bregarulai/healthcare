@@ -6,37 +6,33 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl } from "@/components/ui/form";
 import { useState } from "react";
-
-import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { UserFormValidation } from "@/lib/validation";
+import { PatientFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/patient.actions";
-import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
-import FileUploader from "../FileUploader";
 
-// export enum FormFieldType {
-//   INPUT = "input",
-//   TEXTAREA = "textarea",
-//   PHONE_INPUT = "phoneInput",
-//   CHECKBOX = "checkbox",
-//   DATE_PICKER = "datePicker",
-//   SELECT = "select",
-//   SKELETON = "skeleton",
-// }
+import CustomFormField from "../CustomFormField";
+import { createUser, registerPatient } from "@/lib/actions/patient.actions";
+import { FormFieldType } from "./PatientForm";
+import {
+  Doctors,
+  GenderOptions,
+  IdentificationTypes,
+  PatientFormDefaultValues,
+} from "@/constants";
+import FileUploader from "../FileUploader";
 
 export const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email: "",
       phone: "",
@@ -44,25 +40,31 @@ export const RegisterForm = ({ user }: { user: User }) => {
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async ({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+    console.log("clicking submit");
     setIsLoading(true);
+    let formData;
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      });
+      formData = new FormData();
+      formData.append("blobFile", blobFile);
+      formData.append("fileName", values.identificationDocument[0].name);
+    }
     try {
-      const userData = {
-        name,
-        email,
-        phone,
+      const patienData = {
+        ...values,
+        userId: user.$id,
+        birthDate: new Date(values.birthDate),
+        identificationDocument: formData,
       };
-
-      const user = await createUser(userData);
-      console.log("User: ", user);
-      if (user) {
-        console.log("if statement.  Should redirect");
-        router.push(`/patients/${user.$id}/register`);
-      }
+      // @ts-ignore
+      const patient = await registerPatient(patienData);
+      if (patient) router.push(`/patients/${user.$id}/new-appointment`);
     } catch (error) {
       console.log(error);
     }
@@ -153,8 +155,8 @@ export const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="ocupation"
-            label="Ocupation"
+            name="occupation"
+            label="Occupation"
             placeholder="Software Engineer"
           />
         </div>
