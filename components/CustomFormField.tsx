@@ -19,6 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { FormFieldType } from "./forms/PatientForm";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface CustomProps {
   control: Control<any>;
@@ -78,6 +79,17 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             withCountryCallingCode
             value={field.value}
             onChange={field.onChange}
+          />
+        </FormControl>
+      );
+    case FormFieldType.TEXTAREA:
+      return (
+        <FormControl>
+          <Textarea
+            className="shad-textArea"
+            placeholder={placeholder}
+            {...field}
+            disabled={props.disabled}
           />
         </FormControl>
       );
