@@ -52,10 +52,10 @@ export const PatientForm = () => {
 
       const user = await createUser(userData);
       if (user) router.push(`/patients/${user.$id}/register`);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   }
   return (
     <Form {...form}>

@@ -1,25 +1,19 @@
 import * as sdk from "node-appwrite";
 
-// console.log("FIRST ENDPOINT", process.env.NEXT_PUBLIC_ENDPOINT);
-// export const {
-//   PROJECT_ID,
-//   API_KEY,
-//   DATABASE_ID,
-//   PATIENT_COLLECTION_ID,
-//   DOCTOR_COLLECTION_ID,
-//   APPOINTMENT_COLLECTION_ID,
-//   NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
-//   NEXT_PUBLIC_ENDPOINT: ENDPOINT,
-// } = process.env;
+export const {
+  PROJECT_ID,
+  API_KEY,
+  DATABASE_ID,
+  PATIENT_COLLECTION_ID,
+  DOCTOR_COLLECTION_ID,
+  APPOINTMENT_COLLECTION_ID,
+  NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
+  NEXT_PUBLIC_ENDPOINT: ENDPOINT,
+} = process.env;
 
 const client = new sdk.Client();
-console.log("ENDPOINT", process.env.NEXT_PUBLIC_ENDPOINT);
-console.log("PROJECT ID: ", process.env.PROJECT_ID);
 
-client
-  .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT!)
-  .setProject(process.env.NEXT_PUBLIC_PROJECT_ID!)
-  .setKey(process.env.NEXT_PUBLIC_API_KEY!);
+client.setEndpoint(ENDPOINT!).setProject(PROJECT_ID!).setKey(API_KEY!);
 
 export const databases = new sdk.Databases(client);
 export const storage = new sdk.Storage(client);
