@@ -11,17 +11,56 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { MoreHorizontal } from "lucide-react";
+import StatusBadge from "../StatusBadge";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
   id: string;
+  patient: { name: string };
   amount: number;
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
+  {
+    header: "ID",
+    cell: ({ row }) => <p className="text-14-medium">{row.index + 1}</p>,
+  },
+  {
+    accessorKey: "patient",
+    header: "Patient",
+    cell: ({ row }) => {
+      return <p className="text-14-medium">{row.original.patient.name}</p>;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="min-w-[115px">
+        <StatusBadge />
+      </div>
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "amount",
+    header: () => <div className="text-right">Amount</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
   {
     id: "actions",
     cell: ({ row }) => {
@@ -48,27 +87,6 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuContent>
         </DropdownMenu>
       );
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
 ];
