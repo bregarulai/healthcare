@@ -19,7 +19,7 @@ export type Payment = {
   id: string;
   patient: { name: string };
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  status: "pending" | "scheduled" | "cancelled";
   email: string;
 };
 
@@ -40,7 +40,7 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Status",
     cell: ({ row }) => (
       <div className="min-w-[115px">
-        <StatusBadge />
+        <StatusBadge status={row.original.status} />
       </div>
     ),
   },

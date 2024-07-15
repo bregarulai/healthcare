@@ -1,7 +1,32 @@
-const StatusBadge = () => {
+import { StatusIcon } from "@/constants";
+import clsx from "clsx";
+import Image from "next/image";
+
+const StatusBadge = ({ status }: { status: Status }) => {
   return (
-    <div>
-      <h1>StatusBadge</h1>
+    <div
+      className={clsx("status-badge", {
+        "bg-green-600": status === "scheduled",
+        "bg-blue-600": status === "pending",
+        "bg-red-600": status === "cancelled",
+      })}
+    >
+      <Image
+        className="h-fit w-3"
+        src={StatusIcon[status]}
+        height={24}
+        width={24}
+        alt={status}
+      />
+      <p
+        className={clsx("text-12-semibold", {
+          "text-green-500": status === "scheduled",
+          "text-blue-500": status === "pending",
+          "text-red-500": status === "cancelled",
+        })}
+      >
+        {status}
+      </p>
     </div>
   );
 };
