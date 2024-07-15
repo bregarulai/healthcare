@@ -16,15 +16,20 @@ import { Doctors } from "@/constants";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { createAppointment } from "@/lib/actions/appointment.actions";
+import { Appointment } from "@/types/appwrite.types";
 
 export const AppointmentForm = ({
   userId,
   patientId,
   type,
+  appointment,
+  setOpen,
 }: {
   userId: string;
   patientId: string;
   type: "create" | "cancel" | "schedule";
+  appointment?: Appointment;
+  setOpen: (open: boolean) => void;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +81,19 @@ export const AppointmentForm = ({
             `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
         }
+      } else {
+        const appointmentToUpdate = {
+          userId,
+          appointmentId: appointment?.$id,
+          appointment: {
+            primaryPhysician: values?.primaryPhysician,
+            schedule: new Date(values?.schedule),
+            status: status as Status,
+            cancellationReason: values?.cancellationReason,
+          },
+          type,
+        };
+        const updatedAppointment = await updateAppointment(appointmentToUpdate);
       }
     } catch (error) {
       console.log(error);
