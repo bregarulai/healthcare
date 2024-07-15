@@ -51,7 +51,6 @@ export const PatientForm = () => {
 
       const user = await createUser(userData);
       if (user) {
-        console.log("if statement.  Should redirect");
         router.push(`/patients/${user.$id}/register`);
       }
     } catch (error) {

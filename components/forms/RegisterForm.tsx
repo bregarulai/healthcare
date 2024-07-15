@@ -41,7 +41,6 @@ export const RegisterForm = ({ user }: { user: User }) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
-    console.log("clicking submit");
     setIsLoading(true);
     let formData;
     if (
