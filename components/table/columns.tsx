@@ -12,6 +12,7 @@ import {
 import { Button } from "../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import StatusBadge from "../StatusBadge";
+import { formatDateTime } from "@/lib/utils";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -20,7 +21,7 @@ export type Payment = {
   patient: { name: string };
   amount: number;
   status: "pending" | "scheduled" | "cancelled";
-  email: string;
+  schedule: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -45,8 +46,13 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "schedule",
+    header: "Appointment",
+    cell: ({ row }) => (
+      <p className="text-14-regular min-w-[100px]">
+        {formatDateTime(row.original.schedule).dateTime}
+      </p>
+    ),
   },
   {
     accessorKey: "amount",
