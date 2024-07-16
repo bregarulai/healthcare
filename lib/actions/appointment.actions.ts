@@ -10,7 +10,7 @@ import {
   databases,
   messaging,
 } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { formatDateTime, parseStringify } from "../utils";
 
 export const createAppointment = async (
   appointment: CreateAppointmentParams
@@ -95,7 +95,16 @@ export const updateAppointment = async ({
     if (!updatedAppointment) {
       throw new Error("Appointment not found");
     }
-    //TODO: SMS notitication
+    const smsMessage = `Hi, it's CareRealm.
+    ${
+      type === "schedule"
+        ? `Your appointment has been scheduled for ${
+            formatDateTime(appointment.schedule!).dateTime
+          } with Dr. ${appointment.primaryPhysician}.`
+        : `We regret to inform you that your appointment has been cancelled for the reason: ${appointment.cancellationReason}`
+    }
+    `;
+    await sendSMSNotification(userId, smsMessage);
     revalidatePath("/admin");
     return parseStringify(updatedAppointment);
   } catch (error) {
