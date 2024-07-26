@@ -1,6 +1,7 @@
 <div align="center">
+<br/>
 <img width="1800" alt="healthcareBanner" src="https://github.com/user-attachments/assets/8f21a945-5c34-43f9-9da3-f12f13c4e35f" alt="project banner">
-
+<br/>
   <div>
     <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
