@@ -1,6 +1,6 @@
 <div align="center">
 <br/>
-<img width="1800" alt="healthcareBanner" src="https://github.com/user-attachments/assets/8f21a945-5c34-43f9-9da3-f12f13c4e35f" alt="project banner">
+  <img width="1800" alt="healthcareBanner" src="https://github.com/user-attachments/assets/8f21a945-5c34-43f9-9da3-f12f13c4e35f" alt="project banner">
 <br/>
   <div>
     <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
@@ -13,11 +13,11 @@
 
 </div>
 
-## <a name="introduction">🤖 Introduction</a>
+## 🤖 Introduction
 
 A healthcare patient management application that allows patients to easily register, book, and manage their appointments with doctors, featuring administrative tools for scheduling, confirming, and canceling appointments, along with SMS notifications, all built using Next.js.
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+## ⚙️ Tech Stack
 
 - Next.js
 - Appwrite
@@ -26,7 +26,7 @@ A healthcare patient management application that allows patients to easily regis
 - ShadCN
 - Twilio
 
-## <a name="features">🔋 Features</a>
+## 🔋 Features
 
  **Register as a Patient**: Users can sign up and create a personal profile as a patient.
 
@@ -48,7 +48,7 @@ A healthcare patient management application that allows patients to easily regis
 
 and many more, including code architecture and reusability
 
-## <a name="quick-start">🤸 Quick Start</a>
+## 🤸 Quick Start
 
 Follow these steps to set up the project locally on your machine.
 
